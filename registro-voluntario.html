@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Registro Voluntario</title>
+    <link rel="stylesheet" type="text/css" href="./css/styles.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Registro Voluntario</h1>
+    </header>
+
+    <nav class="navbar">
+        <a class="navbar-page" href="index.html">Inicio</a>
+        <a class="navbar-page" href="registro-voluntario.html">Registro voluntario</a>
+        <a class="navbar-page" href="listado-avistamientos.html">Ver avistamientos</a>
+        <a class="navbar-page" href="estadisticas.html">Estadísticas</a>
+    </nav>
+
+    <main>
+
+        <h2>Formulario de Registro de Voluntario</h2>
+
+        <p>Complete los datos solicitados para registrarse como voluntario.</p>
+        <p>Los campos marcados con (*) son obligatorios.</p>
+
+        <div id="val-box" class="val-box" hidden>
+            <h3>Revise los siguientes campos:</h3>
+            <ul id="val-list" class="val-list"></ul>
+        </div>
+
+
+        <div id="success-box" class="success-box" hidden>
+            <p>Registro realizado correctamente.</p>
+
+            <a href="registro-avistamiento.html">
+                 Continuar al registro de avistamiento
+            </a>
+        </div>
+
+
+        <form id="form-voluntario">
+
+            <div class="grupo-input">
+                <label for="nombre">Nombres *</label>
+                <input type="text" id="nombre" name="nombre">
+            </div>
+
+            <div class="grupo-input">
+                <label for="apellido">Apellidos *</label>
+                <input type="text" id="apellido" name="apellido">
+            </div>
+
+
+            <div class="grupo-input">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email">
+            </div>
+
+            <div class="grupo-input">
+                <label for="celular">Teléfono Móvil * (+56 9XXXXXXXX) </label>
+                <input type="text" id="celular" name="celular">
+            </div>
+
+            <div class="grupo-input">
+                <label for="region">Región *</label>
+                <select id="region" name="region">
+                    <option value="">Seleccione una Región</option>
+                </select>
+            </div>
+
+            <div class="grupo-input">
+                <label for="provincia">Provincia *</label>
+                <select id="provincia" name="provincia">
+                    <option value="">Seleccione primero una Región</option>
+                </select>
+            </div>
+
+            <div class="grupo-input">
+                <label for="comuna">Comuna *</label>
+                <select id="comuna" name="comuna">
+                    <option value="">Seleccione primero una Provincia</option>
+                </select>
+            </div>
+
+            <div class="grupo-input">
+                <label for="direccion">Dirección *</label>
+                <input type="text" id="direccion" name="direccion">
+            </div>
+
+            <button type="button" id="registro-btn">Registrar</button>
+
+        </form>
+
+    </main>
+
+    <!-- Conexión con los archivos java -->
+<script src="./js/select.js"></script>
+<script src="./js/validaciones.js"></script>
+
+</body>
+
+</html>

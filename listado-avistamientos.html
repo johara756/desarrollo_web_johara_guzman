@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Ver Avistamientos</title>
+    <link rel="stylesheet" type="text/css" href="./css/styles.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Avistamientos Registrados</h1>
+    </header>
+
+    <nav class="navbar">
+        <a class="navbar-page" href="index.html">Inicio</a>
+        <a class="navbar-page" href="registro-voluntario.html">Registro voluntario</a>
+        <a class="navbar-page" href="registro-avistamiento.html">Registrar avistamiento</a>
+        <a class="navbar-page" href="listado-avistamientos.html">Ver avistamientos</a>
+        <a class="navbar-page" href="estadisticas.html">Estadísticas</a>
+    </nav>
+
+    <main>
+
+        <h2>Listado de Avistamientos</h2>
+
+        <p>
+            Puede filtrar los registros por grupo de ave y ordenar los resultados.
+        </p>
+
+        <!-- opciones de filtro y ordenamiento -->
+
+        <div class="filtros">
+
+            <div class="grupo-input">
+                <label for="filtro-grupo">Grupo de Ave</label>
+                <!-- por ahora hacemos los filtros de manera manual -->
+                <select id="filtro-grupo">
+                    <option value="">Todos los grupos</option>
+                     <option value="Picaflores">Picaflores</option>
+                    <option value="Jotes, aguiluchos y afines">Jotes, aguiluchos y afines</option>
+                    <option value="Anátidos">Anátidos</option>
+                    <option value="Búhos y lechuzas">Búhos y lechuzas</option>
+                    <option value="Carpinteros">Carpinteros</option>
+                    <option value="Ictéridos">Ictéridos</option>
+                    <option value="Golondrinas">Golondrinas</option>
+                    <option value="Palomas y tórtolas">Palomas y tórtolas</option>
+                </select>
+            </div>
+
+            <div class="grupo-input">
+                <label for="orden">Ordenar por</label>
+
+                <select id="orden">
+                    <option value="fecha-reciente">Fecha más reciente</option>
+                    <option value="fecha-antigua">Fecha más antigua</option>
+                    <option value="lugar-az">Lugar A-Z</option>
+                    <option value="lugar-za">Lugar Z-A</option>
+                </select>
+            </div>
+
+        </div>
+
+        <!-- tabla con los avistamientos -->
+
+        <table id="tabla-avistamientos">
+
+            <thead>  <!-- encabezado de la tabla -->
+                <tr> <!-- tr es para crear una fila-->
+                    <th>Grupo</th> <!-- th es para crear el nombre de la columna-->
+                    <th>Especie</th>
+                    <th>Cantidad</th>
+                    <th>Lugar</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                </tr>
+            </thead>
+
+            <tbody id="cuerpo-tabla">
+            </tbody>  <!-- esta vacío para que javaScript lo complete -->
+
+        </table>
+
+        <!-- botones para cambiar de página -->
+
+        <div class="paginacion">
+            <button type="button" id="anterior-btn">Anterior</button>
+
+            <span id="numero-pagina">Página 1</span>
+
+            <button type="button" id="siguiente-btn">Siguiente</button>
+        </div>
+
+    </main>
+
+    <!-- conexión con JavaScript -->
+    <script src="./js/listado-avistamientos.js"></script>
+
+</body>
+
+</html>

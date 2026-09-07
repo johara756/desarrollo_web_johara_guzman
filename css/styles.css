@@ -1,0 +1,138 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    padding: 15px;
+}
+
+.navbar-page {
+    text-decoration: none;
+    color: black;
+    margin: 0 15px;
+}
+
+.navbar-page:hover {
+    color: green;
+}
+
+main {
+    text-align: center;
+    padding: 30px;
+}
+
+
+form {
+    width: 90%;
+    max-width: 500px;
+    margin: auto;  /*es para centrar el form*/
+    text-align: left; /* textos alineados la izq*/
+}
+
+/*separa cada campo delsig */
+.grupo-input {    
+    margin-bottom: 15px;
+}
+
+.grupo-input label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.grupo-input input,
+/*aplicar el mismo estilo a todo*/
+.grupo-input select,
+.grupo-input textarea {   
+    width: 100%;
+    padding: 8px;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 10px;
+}
+
+/* formato de los mensajes de error */
+.val-box {
+    width: 90%;
+    max-width: 500px;
+    margin: 15px auto;
+    padding: 10px;
+    background-color: #f2dede;
+    text-align: left;
+    border: 1px solid #e0a8a8;
+}
+.val-box h3 {
+    text-align: center;
+}
+
+.val-list {
+    margin: 0;
+    padding-left: 25px;
+}
+
+.val-list li {
+    margin-bottom: 5px;
+}
+
+
+/* cuadros de mensajes correctos */
+
+.success-box {
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #dff0d8;
+    border: 1px solid #b2d8a8;
+    text-align: center;
+}
+
+/* formato de la tabla de avistamientos */
+
+#tabla-avistamientos {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+#tabla-avistamientos th,
+#tabla-avistamientos td {
+/* para generar espacio dentro de la tabla y que no quede todo tan junto */
+    padding: 10px 15px;
+    text-align: left;
+}
+
+/* gráfico de avistamientos por mes */
+#grafico-avistamientos {
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto;
+    text-align: left;
+}
+
+.barra-fila {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.barra-fila span {
+    width: 100px;
+}
+
+.barra {
+    background-color: green;
+    padding: 8px;
+    color: white;
+}
