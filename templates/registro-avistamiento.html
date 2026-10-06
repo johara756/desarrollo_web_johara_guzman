@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Registro de Avistamiento</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>Registro de Avistamiento</h1>
+    </header>
+
+    <nav class="navbar">
+        <a class="navbar-page" href="{{ url_for('index') }}">Inicio</a>
+        <a class="navbar-page" href="{{ url_for('registro_voluntario') }}"> Registro voluntario </a>
+        <a class="navbar-page" href="{{ url_for('listado_avistamientos') }}"> Ver avistamientos</a>
+        <a class="navbar-page" href="#">Estadísticas</a>
+    </nav>
+
+    <main>
+
+        <h2>Formulario de Avistamiento</h2>
+
+        <p>Complete los datos correspondientes al avistamiento.</p>
+        <p>Los campos marcados con (*) son obligatorios.</p>
+
+
+        <div id="val-box-avistamiento" class="val-box"
+            {% if not errores %}hidden{% endif %}>
+
+            <h3>Revise los siguientes campos:</h3>
+
+            <ul id="val-list-avistamiento" class="val-list">
+            <!-- montrar los errores en caso de que existan-->
+                {% if errores %}
+                    {% for error in errores %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endif %}
+
+            </ul>
+
+        </div>
+
+
+        <!-- enviamos los datos y archivos a flask mediante post -->
+        <!-- enctype="multipart/form-data es necesario porque estamos enviando archivos-->
+        <form id="form-avistamiento" method="post" enctype="multipart/form-data">
+
+            <!-- voluntario asociado al avistamiento -->
+            <div class="grupo-input">
+                <label for="voluntario">Voluntario *</label>
+
+                <select id="voluntario" name="voluntario">
+
+                    <option value="">Seleccione un voluntario</option>
+
+                    {# cargamos los voluntarios obtenidos desde la base de datos #}
+                    {% for voluntario in voluntarios %}
+
+                        <option value="{{ voluntario.id }}">
+                            {{ voluntario.nombre }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+            </div>
+
+
+            <!-- especie del ave -->
+            <div class="grupo-input">
+                <label for="ave">Ave *</label>
+
+                <select id="ave" name="ave">
+
+                    <option value="">Seleccione un ave</option>
+
+                    {# cargamos las aves obtenidas desde la base de datos #}
+                    {% for ave in aves %}
+
+                        <option value="{{ ave.id }}">
+                            {{ ave.nombre }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+            </div>
+
+
+            <!-- ubicación de la observación -->
+
+            <div class="grupo-input">
+                <label for="region">Región *</label>
+
+                <select id="region" name="region">
+
+                    <option value="">Seleccione una Región</option>
+
+                    {# cargamos las regiones obtenidas desde la base de datos #}
+                    {% for region in regiones %}
+
+                        <option value="{{ region.id }}">
+                            {{ region.nombre }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+            </div>
+
+
+            <div class="grupo-input">
+                <label for="comuna">Comuna *</label>
+
+                <select id="comuna" name="comuna">
+
+                    <option value="">Seleccione primero una Región</option>
+
+                    {% for comuna in comunas %}
+
+                        <option
+                            value="{{ comuna.id }}"
+                            data-region="{{ comuna.region_id }}"
+                            hidden>
+                            {{ comuna.nombre }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+            </div>
+
+
+            <div class="grupo-input">
+                <label for="lugar">Lugar específico *</label>
+                <input type="text" id="lugar" name="lugar">
+            </div>
+
+
+            <!-- fecha y hora -->
+            <div class="grupo-input">
+                <label for="fecha">Fecha de observación *</label>
+                <input type="date" id="fecha" name="fecha">
+            </div>
+
+            <div class="grupo-input">
+                <label for="hora">Hora del Avistamiento *</label>
+                <input type="time" id="hora" name="hora">
+            </div>
+
+
+            <!-- foto o video del avistamiento -->
+            <div class="grupo-input">
+                <label for="archivo">Foto o Video *</label>
+
+                <input type="file"
+                    id="archivo"
+                    name="archivo"
+                    accept="image/*,video/*"
+                    multiple>
+            </div>
+
+
+            <!-- comentarios a la observacion -->
+            <div class="grupo-input">
+                <label for="observaciones">Comentarios</label>
+                <textarea id="observaciones" name="observaciones"></textarea>
+            </div>
+
+
+            <!-- despues de la validación, los datos se envian a flask -->
+            <button type="button" id="avistamiento-btn">
+                Registrar Avistamiento
+            </button>
+
+        </form>
+
+    </main>
+
+
+    <!-- Conexión con los archivos javascript -->
+    <script src="{{ url_for('static', filename='js/select.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/validaciones-avistamiento.js') }}"></script>
+
+</body>
+
+</html>

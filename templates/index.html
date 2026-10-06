@@ -1,0 +1,63 @@
+<!DOCTYPE html> 
+<html lang="es"> 
+ 
+<head> 
+    <title>Avistamientos de Aves</title> 
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}"> 
+</head> 
+ 
+<body> 
+ 
+    <header> 
+        <h1>Registro de Avistamientos de Aves</h1> 
+    </header> 
+ 
+    <!-- url_for( ) busca la función de app.py --> 
+    <nav class="navbar"> 
+        <a class="navbar-page" href="{{ url_for('registro_voluntario') }}">Registro voluntario</a> 
+        <a class="navbar-page" href="{{ url_for('registro_avistamiento') }}">Registrar avistamiento</a> 
+        <a class="navbar-page" href="{{ url_for('listado_avistamientos') }}">Ver avistamientos</a> 
+        <a class="navbar-page" href="#">Estadísticas</a> 
+    </nav> 
+
+    <main> 
+        <p>Bienvenido al sistema de registro voluntario de avistamientos de aves en Chile.</p> 
+
+        <p>Si desea registrar un avistamiento, primero debe registrarse como voluntario.</p>
+        {% if mensaje %}
+            <div class="success-box">
+                {{ mensaje }}
+            </div>
+        {% endif %}
+        
+        <!-- mostramos los dos ultimos avistamientos registrados : son los dos ultimos ingresados a la base, no por fecha de avistamiento -->
+        <h2>Últimos avistamientos registrados</h2>
+
+        <div class="ultimos-avistamientos">
+            {% for avistamiento in ultimos_avistamientos %}
+                <div class="avistamiento-portada">
+                    <h3>{{ avistamiento.ave.nombre }}</h3>
+
+                    <p><strong>Lugar:</strong> {{ avistamiento.lugar }}</p>
+                    <p><strong>Fecha:</strong> {{ avistamiento.fecha_hora.strftime("%d-%m-%Y") }}</p>
+                    <p><strong>Hora:</strong> {{ avistamiento.fecha_hora.strftime("%H:%M") }}</p>
+
+                    <!-- mostramos las fotos asociadas al avistamiento -->
+                    {% for registro in avistamiento.registros %}
+                        {% if registro.ruta_archivo.endswith(".jpg")
+                            or registro.ruta_archivo.endswith(".jpeg")
+                            or registro.ruta_archivo.endswith(".png")
+                            or registro.ruta_archivo.endswith(".webp") %}
+
+                            <img src="{{ url_for('static', filename=registro.ruta_archivo) }}"
+                                 alt="{{ registro.nombre_archivo }}">
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        </div>
+    </main> 
+    
+</body> 
+ 
+</html>

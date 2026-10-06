@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Ver Avistamientos</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>Avistamientos Registrados</h1>
+    </header>
+
+    <nav class="navbar">
+        <a class="navbar-page" href="{{ url_for('index') }}">Inicio</a>
+        <a class="navbar-page" href="{{ url_for('registro_voluntario') }}">Registro voluntario</a>
+        <a class="navbar-page" href="{{ url_for('registro_avistamiento') }}">Registrar avistamiento</a>
+        <a class="navbar-page" href="{{ url_for('listado_avistamientos') }}">Ver avistamientos</a>
+        <a class="navbar-page" href="#">Estadísticas</a>
+    </nav>
+
+    <main>
+
+        <h2>Listado de Avistamientos</h2>
+
+        <p>
+            Puede filtrar los registros por ave y ordenar los resultados.
+        </p>
+
+        <!-- opciones de filtro y ordenamiento -->
+
+        <form method="get">
+
+            <div class="filtros">
+
+                <div class="grupo-input">
+                    <label for="filtro-ave">Ave</label>
+
+                    <!-- las aves se cargan desde la base de datos -->
+                    <select id="filtro-ave" name="ave">
+
+                        <option value="">Todas las aves</option>
+
+                        {% for ave in aves %}
+                            <option value="{{ ave.id }}"
+                                {% if filtro_ave == ave.id|string %}selected{% endif %}>
+                                {{ ave.nombre }}
+                            </option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+
+
+                <div class="grupo-input">
+                    <label for="orden">Ordenar por</label>
+
+                    <select id="orden" name="orden">
+
+                        <option value="fecha-reciente"
+                            {% if orden == "fecha-reciente" %}selected{% endif %}> Fecha más reciente </option>
+
+                        <option value="fecha-antigua"
+                            {% if orden == "fecha-antigua" %}selected{% endif %}> Fecha más antigua </option>
+
+                        <option value="lugar-az"
+                            {% if orden == "lugar-az" %}selected{% endif %}> Lugar A-Z </option>
+
+                        <option value="lugar-za"
+                            {% if orden == "lugar-za" %}selected{% endif %}> Lugar Z-A </option>
+                    </select>
+                </div>
+
+                <button type="submit">Aplicar</button>
+
+            </div>
+
+        </form>
+
+
+        <!-- tabla con los avistamientos -->
+
+        <table id="tabla-avistamientos">
+
+            <thead>  <!-- encabezado de la tabla -->
+                <tr> <!-- tr es para crear una fila-->
+                    <th>Ave</th> <!-- th es para crear el nombre de la columna-->
+                    <th>Voluntario</th>
+                    <th>Lugar</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <!-- los avistamientos se cargan desde Flask -->
+                {% for avistamiento in avistamientos %}
+                    <tr>
+                        <td>{{ avistamiento.ave.nombre }}</td>
+                        <td>{{ avistamiento.voluntario.nombre }}</td>
+                        <td>{{ avistamiento.lugar }}</td>
+                        <td>{{ avistamiento.fecha_hora.strftime("%d-%m-%Y") }}</td>
+                        <td>{{ avistamiento.fecha_hora.strftime("%H:%M") }}</td>
+                    </tr>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+
+        <!-- en caso de que no hayan avistamientos de cierta ave -->
+
+        {% if not avistamientos %}
+            <p>No hay avistamientos registrados.</p>
+        {% endif %}
+
+        <!-- botones para cambiar de página -->
+
+        <div class="paginacion">
+
+            {% if pagina > 1 %}
+                <a href="{{ url_for('listado_avistamientos',
+                    pagina=pagina - 1,
+                    ave=filtro_ave,
+                    orden=orden) }}">
+                    Anterior
+                </a>
+            {% endif %}
+
+
+            <span id="numero-pagina">
+                Página {{ pagina }} de {{ total_paginas }}
+            </span>
+
+
+            {% if pagina < total_paginas %}
+                <a href="{{ url_for('listado_avistamientos',
+                    pagina=pagina + 1,
+                    ave=filtro_ave,
+                    orden=orden) }}">
+                    Siguiente
+                </a>
+            {% endif %}
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

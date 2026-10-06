@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Registro Voluntario</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>Registro Voluntario</h1>
+    </header>
+
+    <nav class="navbar">
+        <a class="navbar-page" href="{{ url_for('index') }}">Inicio</a>
+        <a class="navbar-page" href="{{ url_for('registro_voluntario') }}"> Registro voluntario </a>
+        <a class="navbar-page" href="{{ url_for('listado_avistamientos') }}"> Ver avistamientos</a>
+        <a class="navbar-page" href="#">Estadísticas</a>
+    </nav>
+
+    <main>
+
+        <h2>Formulario de Registro de Voluntario</h2>
+
+        <p>Complete los datos solicitados para registrarse como voluntario.</p>
+        <p>Los campos marcados con (*) son obligatorios.</p>
+
+
+        <div id="val-box" class="val-box"
+            {% if not errores %}hidden{% endif %}>
+
+            <h3>Revise los siguientes campos:</h3>
+
+            <ul id="val-list" class="val-list">
+                {% if errores %}
+                    {% for error in errores %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+
+        </div>
+
+
+        <div id="success-box" class="success-box"
+            {% if not registro_exitoso %}hidden{% endif %}>
+
+            <p>Registro realizado correctamente.</p>
+
+            <a href="{{ url_for('registro_avistamiento') }}">
+                Continuar al registro de avistamiento
+            </a>
+
+            <a href="{{ url_for('index') }}">
+                Volver al inicio
+            </a>
+
+        </div>
+
+    <!-- una vez se registra un formulario correcto, este se esconde con el fin de que un mismo usuario no pueda registrarse dos veces -->   
+    {% if not registro_exitoso %}
+
+
+<!--  enviamos datos a flask mediante post -->
+        <form id="form-voluntario" method="post">
+
+            <div class="grupo-input">
+                <label for="nombre">Nombres *</label>
+                <input type="text" id="nombre" name="nombre">
+            </div>
+
+            <div class="grupo-input">
+                <label for="apellido">Apellidos *</label>
+                <input type="text" id="apellido" name="apellido">
+            </div>
+
+
+            <div class="grupo-input">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email">
+            </div>
+
+            <div class="grupo-input">
+                <label for="celular">Teléfono Móvil * (+56 9XXXXXXXX) </label>
+                <input type="text" id="celular" name="celular">
+            </div>
+
+            <div class="grupo-input">
+                <label for="region">Región *</label>
+
+                <select id="region" name="region">
+
+                    <option value="">Seleccione una Región</option>
+
+                    {# cargamos las regiones obtenidas desde la base de datos #}
+                    {% for region in regiones %}
+                        
+                        {# usamos region.id para depsues consultar las comunas que tienen region_id #}
+                        <option value="{{ region.id }}">{{ region.nombre }}</option>
+                    {% endfor %}
+                </select>
+
+
+            </div>
+
+
+            <div class="grupo-input">
+                <label for="comuna">Comuna *</label>
+                <select id="comuna" name="comuna">
+                    <option value=""> Seleccione primero una Región </option>
+
+                    {% for comuna in comunas %}
+                        <option
+                            value="{{ comuna.id }}"
+                            data-region="{{ comuna.region_id }}"
+                            hidden>
+                            {{ comuna.nombre }}
+                        </option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+
+            <!-- despues de la validación, los datos se envian a flask -->
+            <button type="button" id="registro-btn">Registrar</button>
+
+        </form>
+    <!-- una vez se registra un formulario correcto, este se esconde con el fin de que un mismo usuario no pueda registrarse dos veces -->
+    {% endif %}
+
+    </main>
+
+<!-- Conexión con los archivos javascript -->
+<script src="{{ url_for('static', filename='js/validaciones.js') }}"></script>
+<script src="{{ url_for('static', filename='js/select.js') }}"></script>
+
+
+</body>
+
+</html>

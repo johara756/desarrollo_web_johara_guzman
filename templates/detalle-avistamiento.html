@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Detalle del Avistamiento</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>Detalle del Avistamiento</h1>
+    </header>
+
+    <nav class="navbar">
+        <a class="navbar-page" href="{{ url_for('index') }}">Inicio</a>
+        <a class="navbar-page" href="{{ url_for('registro_voluntario') }}">Registro voluntario</a>
+        <a class="navbar-page" href="{{ url_for('registro_avistamiento') }}">Registrar avistamiento</a>
+        <a class="navbar-page" href="{{ url_for('listado_avistamientos') }}">Ver avistamientos</a>
+        <a class="navbar-page" href="#">Estadísticas</a>
+    </nav>
+
+    <main>
+
+        <h2>Información del Avistamiento</h2>
+
+        <!-- información obtenida desde la base de datos -->
+        <div class="detalle-avistamiento">
+
+            <p><strong>Ave:</strong> {{ avistamiento.ave.nombre }}</p>
+
+            <p><strong>Voluntario:</strong> {{ avistamiento.voluntario.nombre }}</p>
+
+            <p><strong>Lugar:</strong> {{ avistamiento.lugar }}</p>
+
+            <p>
+                <strong>Fecha:</strong>
+                {{ avistamiento.fecha_hora.strftime("%d-%m-%Y") }}
+            </p>
+
+            <p>
+                <strong>Hora:</strong>
+                {{ avistamiento.fecha_hora.strftime("%H:%M") }}
+            </p>
+
+            <p>
+                <strong>Comentarios:</strong>
+                {% if avistamiento.descripcion %}
+                    {{ avistamiento.descripcion }}
+                {% else %}
+                    Sin comentarios.
+                {% endif %}
+            </p>
+
+        </div>
+
+
+        <!-- fotos y videos asociados al avistamiento -->
+
+        <h3>Registros</h3>
+
+        <div class="registros-avistamiento">
+
+            {% for registro in avistamiento.registros %}
+
+                {% if registro.ruta_archivo.endswith(".mp4")
+                    or registro.ruta_archivo.endswith(".webm")
+                    or registro.ruta_archivo.endswith(".ogg")
+                    or registro.ruta_archivo.endswith(".mov") %}
+
+                    <video controls>
+                        <source src="{{ url_for('static', filename=registro.ruta_archivo) }}">
+                    </video>
+
+                {% else %}
+
+                    <img
+                        src="{{ url_for('static', filename=registro.ruta_archivo) }}"
+                        alt="{{ registro.nombre_archivo }}"
+                    >
+
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+
+        <a href="{{ url_for('listado_avistamientos') }}">
+            Volver al listado
+        </a>
+
+    </main>
+
+</body>
+
+</html>
