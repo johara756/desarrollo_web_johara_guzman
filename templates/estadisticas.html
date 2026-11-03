@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Estadísticas</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>Estadísticas</h1>
+    </header>
+
+    <nav class="navbar">
+        <a class="navbar-page" href="{{ url_for('index') }}">Inicio</a>
+        <a class="navbar-page" href="{{ url_for('registro_voluntario') }}">Registro voluntario</a>
+        <a class="navbar-page" href="{{ url_for('registro_avistamiento') }}">Registrar avistamiento</a>
+        <a class="navbar-page" href="{{ url_for('listado_avistamientos') }}">Ver avistamientos</a>
+        <a class="navbar-page" href="{{ url_for('estadisticas') }}">Estadísticas</a>
+    </nav>
+
+    <main>
+
+        <h2>Estadísticas de Avistamientos</h2>
+
+        <p>
+            A continuación se presentan estadísticas obtenidas a partir de los registros.
+        </p>
+
+
+        <!-- grafico de cant de avistamientos por dia -->
+        <div class="seccion-grafico">
+
+            <div id="grafico-avistamientos-dia">
+            </div>
+
+        </div>
+
+
+        <!-- grafico de cant de avistamientos por ave -->
+        <div class="seccion-grafico">
+
+            <div id="grafico-avistamientos-ave">
+            </div>
+
+        </div>
+
+
+        <!-- grafico de cant de voluntarios por comuna -->
+        <div class="seccion-grafico">
+
+            <div id="grafico-voluntarios-comuna">
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- libreria utilizada para crear los graficos -->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+
+    <!-- archivo javascript de las estadisticas -->
+    <script src="{{ url_for('static', filename='js/stats.js') }}"></script>
+
+   <a class="volver-inicio" href="{{ url_for('index') }}">
+    Volver al inicio
+    </a>
+
+</body>
+
+</html>
