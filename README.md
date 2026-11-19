@@ -1,23 +1,24 @@
-## Consideraciones para la corrección
+-Para esta tarea se implemento lo pedido y se utilizo la misma base de datos de la tarea 2, por lo que se mantiene los datos de voluntarios y avistamientos que ya estaban refistrados. 
 
-- Se consideró que para registrar un avistamiento, el usuario debe registrarse previamente como voluntario. Por esta razón, al completar correctamente el formulario de registro se muestra un enlace directo al formulario de avistamiento. Sin embargo, también se dejó visible la opción Registrar avistamiento en la barra de navegación de las demás páginas, considerando que un usuario ya registrado puede revisar el listado o las estadísticas y luego querer registrar un nuevo avistamiento sin tener que volver a pasar por el formulario de registro.
+-Se agrego la tabla nota utilizando lo que se entrego en la tarea y los datos de conexión a la base de datos, son los mismo que en la tarea 2
 
-(Al tratarse de un prototipo sin almacenamiento de datos, no se implementó un control de sesión para distinguir entre usuarios registrados y no registrados.)
+Consideraciones: 
+-La búsqueda no distingue entre mayúsculas y minúsculas, pero es sensible a los tildes.
 
-- Para voluntarios, avistamientos y estadísticas se agregaron de manera manual datos ficticios de voluntarios, dado que la tarea es prototipo y no requiere guardar los datos.
+-Las notas aceptadas son números enteros entre el 1 y el 7.
 
-- Para el registro de aves se utilizó una clasificación por grupo y especie, tomando como referencia eBird Chile. Al seleccionar un grupo, se muestran solamente las especies correspondientes y no se consideró el nombre cientifico de la especie por simplicidad. 
+-El promedio de notas se actualiza mediante solicitud asíncrona, por lo que no es necesario recargar la página. 
 
-https://ebird.org/home?continue
+-El voluntario que tiene nota, es aquel que se llama Luciano
 
-- La cantidad de individuos observados debe ser un número entero entre 1 y 1000, con el fin de evitar valores inválidos o poco razonables.
+Ejecuación: 
 
-- Se definió que la fecha del avistamiento no puede ser futura ni tener una antigüedad mayor a un año. Si el avistamiento corresponde al día actual, tampoco se permite ingresar una hora futura.
+Para ejecutar la aplicación, desde la carpeta donde se encuentra pom.xml se debe utilizar:
 
-- El campo de comentarios es opcional pero tiene un limite de palabras, para evitar que un usuario ingrese un comentario más largo de lo necesario. 
+.\mvnw.cmd spring-boot:run
 
-- El listado de avistamientos permite filtrar por grupo de ave, ordenar por fecha o lugar y se decidio mostrar 3 registros por página. Esto es con el fin de poder probar el paso entre paginas y que no fuera necesario agregar tantos datos ficticios. 
+Luego se puede acceder desde:
 
-## Ejecución
+http://localhost:8080/
 
-Abrir `index.html` en un navegador web para iniciar el sistema.
+Como consideración, el proyecto quedó guardado dentro de tarea4_java/tarea4, por lo que para ejecutarlo es necesario entrar primero a la carpeta tarea4, donde se encuentra el archivo pom.xml.
